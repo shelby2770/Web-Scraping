@@ -8,7 +8,7 @@ const NavBar = () => {
   const [data, setData] = useState([]);
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitted:", inputValue);
+    // console.log("Submitted:", inputValue);
     if (!inputValue) {
       swal("Input field empty!", "", "error");
     } else {
@@ -24,7 +24,6 @@ const NavBar = () => {
         .then((res) => res.json())
         .then((data) => {
           setData(data);
-          console.log(JSON.stringify(data).length);
         });
       setInputValue("");
     }
@@ -48,7 +47,7 @@ const NavBar = () => {
                 type="text"
                 value={inputValue}
                 onChange={handleChange}
-                placeholder="Enter your product"prod
+                placeholder="Enter your product"
               />
               <button
                 className="btn join-item rounded-r-md bg-primary_clr text-neutral-100"

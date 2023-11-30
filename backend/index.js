@@ -15,10 +15,8 @@ app.get("/", (req, res) => {
 
 app.post("/devices", (req, res) => {
   console.log("api is hitting");
-  let returned_val = [];
   const s = req.body.inputValue;
-  const command = `cd .. && cd gadgetNgadget && python spider.py ${s}`
-  let obj= {};
+  const command = `python spider.py ${s}`
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${error.message}`);
@@ -29,8 +27,6 @@ app.post("/devices", (req, res) => {
       // return;
     }
     const get_data= JSON.parse(stdout)
-     // obj = { get_data };
-    // console.log(`stdout: ${stdout}`);
   res.send(get_data);
   });
 });

@@ -1,4 +1,3 @@
-// import { useEffect, useState } from "react";
 import swal from "sweetalert";
 import { FidgetSpinner } from "react-loader-spinner";
 import DeviceShowcase from "./Components/DeviceShowcase";
@@ -8,7 +7,6 @@ import { AssetContext } from "./Components/NavBar";
 const Home = () => {
   const data = useContext(AssetContext);
   const [check, setCheck] = useState(false);
-  // console.log("home e", data);
   const handleSort = () => {
     if (check) {
       swal("Already sorted!", "", "error");
@@ -27,7 +25,6 @@ const Home = () => {
           )
       );
       <div>Sort hoise...</div>;
-      console.log("after:", data);
       setCheck(true);
     }
   };
