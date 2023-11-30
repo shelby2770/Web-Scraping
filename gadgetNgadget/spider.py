@@ -48,6 +48,9 @@ class Spider2(scrapy.Spider):
         d = {"shop_img": images[0], "device_img": images[1],
              "model": response.css('.show-product-nav::text').get(),
              "price": [response.css('.single-product-price bdi::text').get()], "link": str(response)[5:-1]}
+
+        if response.css('.single-product-price del bdi::text').get():
+            d["price"].append(response.css('.single-product-price ins bdi::text').get())
         product_list.append(d)
 
 
