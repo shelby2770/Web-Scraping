@@ -6,10 +6,7 @@ import { AssetContext } from "./Components/NavBar";
 
 const Home = () => {
   const data = useContext(AssetContext);
-  console.log("home e", data);
-  console.log(typeof data, typeof data[0])
-  console.log(Array.isArray(data), Array.isArray(data[0]))
-  // console.log(typeof data[0])
+  // console.log("home e", data);
   return (
     <div className="flex flex-col items-center my-10">
       {data.length ? (

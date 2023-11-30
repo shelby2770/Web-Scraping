@@ -20,7 +20,7 @@ class Spider1(scrapy.Spider):
         images = response.css('div.product-img img::attr(src)').getall()
         cards = response.css('.product-gallery-item-content')
         for i, j in enumerate(cards):
-            d = {"shop_img": shop_img, "device_img": images[i], "model": j.css('h4::text').extract(),
+            d = {"shop_img": shop_img, "device_img": images[i], "model": j.css('h4::text').get(),
                  "price": [j.css('span::text').get()[1:]], "link": j.css('a').css('a::attr(href)').get()}
             if j.css('del::text').get():
                 d["price"].append(j.css('del::text').get()[1:])
@@ -101,9 +101,9 @@ for i in range(1,n):
         q+= "+"+sys.argv[i]
 
 process = CrawlerProcess()
-# process.crawl(Spider1, q)
-# process.crawl(Spider2, q)
+process.crawl(Spider1, q)
+process.crawl(Spider2, q)
 process.crawl(Spider3, q)
 process.start()
-# sumash_tech(q)
+sumash_tech(q)
 print(json.dumps(product_list))
