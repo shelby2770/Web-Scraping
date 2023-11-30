@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Device = ({ item }) => {
   const { shop_img, device_img, model, price, link } = item;
-  console.log(device_img)
+  console.log(link)
   return (
     <div className="bg-base-100 shadow-xl p-2 rounded-lg border-[1px]">
       <figure className="">
