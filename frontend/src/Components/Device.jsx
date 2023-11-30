@@ -43,7 +43,7 @@ const Device = ({ item }) => {
 
       <Link to={link} target="_blank" rel="noopener noreferrer">
         <button className="w-full btn rounded-md bg-[#2F80ED] text-white">
-          <div className="flex flex-row justify-end gap-2 items-center">
+          <div className="flex flex-row gap-2 items-center">
             <FaShoppingCart />
             But Now
           </div>
