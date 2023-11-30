@@ -1,3 +1,4 @@
+import swal from "sweetalert";
 import { createContext, useState } from "react";
 import Home from "../Home";
 
@@ -8,21 +9,25 @@ const NavBar = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Submitted:", inputValue);
-    setData("Processing")
-    const user = { inputValue };
-    fetch("http://localhost:3000/devices", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        console.log(JSON.stringify(data).length);
-      });
-    setInputValue("");
+    if (!inputValue) {
+      swal("Input field empty!", "", "error");
+    } else {
+      setData("Processing");
+      const user = { inputValue };
+      fetch("http://localhost:3000/devices", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+          console.log(JSON.stringify(data).length);
+        });
+      setInputValue("");
+    }
   };
 
   const handleChange = (event) => {
@@ -43,7 +48,7 @@ const NavBar = () => {
                 type="text"
                 value={inputValue}
                 onChange={handleChange}
-                placeholder="Enter your product..."
+                placeholder="Enter your product"prod
               />
               <button
                 className="btn join-item rounded-r-md bg-primary_clr text-neutral-100"
