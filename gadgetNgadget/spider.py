@@ -18,18 +18,12 @@ class Spider1(scrapy.Spider):
         global product_list
         shop_img = response.css('.sticky_nav').css('img::attr(src)').get()
         images = response.css('div.product-img img::attr(src)').getall()
-        models = response.css('.product-gallery-item-content h4::text').extract()
-        priceWithBugs = response.css('.product-gallery-item-content span::text').extract()
-        prices = []
-        for i in range(0, len(priceWithBugs), 3):
-            prices.append(priceWithBugs[i][1:])
-        linksWithBugs= response.css('.product-gallery-item-content a').css('a::attr(href)').getall()
-        links = []
-        for i in range(0,len(linksWithBugs),2):
-            links.append(linksWithBugs[i])
-        for i in range(len(images)):
-            d = {"shop_img": shop_img, "device_img": images[i], "model": models[i], "price": [prices[i]],
-                 "link": links[i]}
+        cards = response.css('.product-gallery-item-content')
+        for i, j in enumerate(cards):
+            d = {"shop_img": shop_img, "device_img": images[i], "model": j.css('h4::text').extract(),
+                 "price": [j.css('span::text').get()[1:]], "link": j.css('a').css('a::attr(href)').get()}
+            if j.css('del::text').get():
+                d["price"].append(j.css('del::text').get()[1:])
             product_list.append(d)
 
 
