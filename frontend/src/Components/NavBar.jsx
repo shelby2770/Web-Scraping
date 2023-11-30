@@ -1,16 +1,14 @@
 import { createContext, useState } from "react";
 import Home from "../Home";
-// export const LevelContext = createContext();
 
 export const AssetContext = createContext();
 const NavBar = () => {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
-  // const [check, setCheck] =useState(false)
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Submitted:", inputValue);
-    // setCheck(true)
+    setData("Processing")
     const user = { inputValue };
     fetch("http://localhost:3000/devices", {
       method: "POST",
@@ -59,8 +57,6 @@ const NavBar = () => {
         <AssetContext.Provider value={data}>
           <Home></Home>
         </AssetContext.Provider>
-
-        {/* {!check && <Home></Home>} */}
       </div>
     </div>
   );
