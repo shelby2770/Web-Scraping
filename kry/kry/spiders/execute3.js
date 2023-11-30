@@ -14,6 +14,6 @@ exec(command, (error, stdout, stderr) => {
   }
   console.log(`stdout: ${stdout}`);
   // console.log(typeof stdout)
-  // const x= JSON.parse(stdout)
+
   // console.log(typeof x[1]["price"][0])
 });

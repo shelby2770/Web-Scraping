@@ -16,7 +16,7 @@ class Spider1(scrapy.Spider):
 
     def parse(self, response):
         global product_list
-        shop_img = response.css('.retina-logo').css('img::attr(src)').get()
+        shop_img = response.css('.sticky_nav').css('img::attr(src)').get()
         images = response.css('div.product-img img::attr(src)').getall()
         models = response.css('.product-gallery-item-content h4::text').extract()
         priceWithBugs = response.css('.product-gallery-item-content span::text').extract()
@@ -75,7 +75,7 @@ class Spider3(scrapy.Spider):
 
         for i in range(len(cards) - 1):
             d = {"shop_img": shop_img, "device_img": images[i], "model": cards[i].css('.hov-text-primary::text').get(),
-                 "price": cards[i].css('.text-primary::text').get()[2:-1], "links": cards[i].css('a::attr(href)').get()}
+                 "price": [cards[i].css('.text-primary::text').get()[2:-1]], "links": cards[i].css('a::attr(href)').get()}
             product_list.append(d)
 
 
@@ -88,19 +88,19 @@ def sumash_tech(q):
 
     for item in data["results"]["products"]:
         d = {"shop_img": shop_img, "device_img": item["card_image"], "model": item["name"],
-             "price": [item["price"], item["discount_price"]] if int(item["discount_price"]) else [item["price"]]}
+             "price": [item["price"], item["discount_price"]] if item["discount_price"] else [item["price"]]}
         slug = item["slug"]
-        d["link"] = f"macbook-m1-pro-14-10core/{slug}"
+        d["link"] = f"https://sumashtech.com/product/{slug}"
         product_list.append(d)
 
 
-# n= len(sys.argv)
-q = "Samsung"
-# for i in range(1,n):
-#     if i==1:
-#         q+= sys.argv[i]
-#     else:
-#         q+= "+"+sys.argv[i]
+n= len(sys.argv)
+q = ""
+for i in range(1,n):
+    if i==1:
+        q+= sys.argv[i]
+    else:
+        q+= "+"+sys.argv[i]
 
 process = CrawlerProcess()
 process.crawl(Spider1, q)
@@ -108,5 +108,5 @@ process.crawl(Spider2, q)
 process.crawl(Spider3, q)
 process.start()
 sumash_tech(q)
-print(*product_list, sep='\n')
-# print(json.dumps(product_list))
+# print(*product_list, sep='\n')
+print(json.dumps(product_list))

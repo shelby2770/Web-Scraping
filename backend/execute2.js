@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 
-const s= "pixel 7"
-const command= `python spider.py ${s}`
+const s= "Iphone"
+const command= `cd .. && cd gadgetNgadget && python spider.py ${s}`
 exec(command, (error, stdout, stderr) => {
   if (error) {
     console.error(`Error: ${error.message}`);
@@ -11,5 +11,9 @@ exec(command, (error, stdout, stderr) => {
     // console.error(`stderr: ${stderr}`);
     // return;
   }
-  console.log(`stdout: ${stdout}`);
+  const get_data= JSON.parse(stdout)
+  for (let i=0; i<get_data.length; ++i){
+    console.log(get_data[i]["price"])
+  }
+  // console.log(`stdout: ${stdout}`);
 });

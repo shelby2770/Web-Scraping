@@ -17,40 +17,24 @@ app.post("/devices", (req, res) => {
   console.log("api is hitting");
   let returned_val = [];
   const s = req.body.inputValue;
-  const command1 = `cd .. && cd gadgetNgadget && scrapy crawl spider1 -a my_argument=${s}`;
-  const command2 = `cd .. && cd kry && scrapy crawl kryspider -a my_argument=${s}`;
+  const command = `cd .. && cd gadgetNgadget && python spider.py ${s}`
   let obj= {};
-  exec(command1, (error, stdout, stderr) => {
+  exec(command, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${error.message}`);
       return;
     }
     if (stderr) {
-      console.error(`stderr: ${stderr}`);
+      // console.error(`stderr: ${stderr}`);
       // return;
     }
-     obj = { stdout };
+    const get_data= JSON.parse(stdout)
+     // obj = { get_data };
     // console.log(`stdout: ${stdout}`);
-  res.send(obj);
+  res.send(get_data);
   });
-  // exec(command, (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`Error: ${error.message}`);
-  //     return;
-  //   }
-  //   if (stderr) {
-  //     console.error(`stderr: ${stderr}`);
-  //     // return;
-  //   }
-  //   console.log(`stdout: ${stdout}`);
-  // });
-
 });
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
-
-// app.get("/devices", (req, res) => {
-//   res.send(users);
-// });

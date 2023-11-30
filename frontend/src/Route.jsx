@@ -8,12 +8,12 @@ const create_route = createBrowserRouter([
     path: "/",
     element: <Layout></Layout>,
     errorElement: <ShowError></ShowError>,
-    children: [
-      {
-        path: "/",
-        element: <Home></Home>,
-      },
-    ],
+    // children: [
+    //   {
+    //     path: "/",
+    //     element: <Home></Home>,
+    //   },
+    // ],
   },
 ]);
 export default create_route;

@@ -1,14 +1,35 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState } from "react";
 import Home from "../Home";
 // export const LevelContext = createContext();
 
 export const AssetContext = createContext();
 const NavBar = () => {
-  // const [value, setValue] = useState("Initial Value");
-  // const updateValue = (newValue) => {
-  //   setValue(newValue);
-  // };
-  const [data, setData] = useState();
+  const [inputValue, setInputValue] = useState("");
+  const [data, setData] = useState([]);
+  // const [check, setCheck] =useState(false)
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Submitted:", inputValue);
+    // setCheck(true)
+    const user = { inputValue };
+    fetch("http://localhost:3000/devices", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        console.log(JSON.stringify(data).length);
+      });
+    setInputValue("");
+  };
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
   return (
     <div className="flex flex-col">
@@ -18,12 +39,12 @@ const NavBar = () => {
             <a className="btn btn-ghost text-xl">Python Gurus</a>
           </div>
           <div className="flex-none gap-2">
-            <form className="flex flex-center join">
+            <form onSubmit={handleSubmit} className="flex flex-center join">
               <input
                 className=" input input-bordered rounded-md join-item"
                 type="text"
-                // value=
-                // onChange=
+                value={inputValue}
+                onChange={handleChange}
                 placeholder="Enter your product..."
               />
               <button
@@ -38,6 +59,8 @@ const NavBar = () => {
         <AssetContext.Provider value={data}>
           <Home></Home>
         </AssetContext.Provider>
+
+        {/* {!check && <Home></Home>} */}
       </div>
     </div>
   );
