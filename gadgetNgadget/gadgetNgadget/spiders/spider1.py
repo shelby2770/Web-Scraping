@@ -2,6 +2,7 @@ import scrapy
 
 class Spider1(scrapy.Spider):
     name = "spider1"
+
     # start_urls = [
     #     f"https://gngbd.com/product/search?search={s}"
     # ]
@@ -23,7 +24,7 @@ class Spider1(scrapy.Spider):
             lst.append((img[i], model[i], price[i]))
         # print(len(img),len(model),len(price))
         # print("Hastalavista")
-        returned_str= ""
+        returned_str = ""
         for i in lst:
-            returned_str+= f"{i[0]}|||{i[1]}|||{i[2]}\n"
+            returned_str += f"{i[0]}|||{i[1]}|||{i[2]}\n"
         print(returned_str)

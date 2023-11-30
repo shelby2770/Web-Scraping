@@ -15,11 +15,12 @@ app.get("/", (req, res) => {
 
 app.post("/devices", (req, res) => {
   console.log("api is hitting");
-  let returned_val= []
+  let returned_val = [];
   const s = req.body.inputValue;
-  const command =
-    `cd .. && cd gadgetNgadget && scrapy crawl spider1 -a my_argument=${s}`;
-  exec(command, (error, stdout, stderr) => {
+  const command1 = `cd .. && cd gadgetNgadget && scrapy crawl spider1 -a my_argument=${s}`;
+  const command2 = `cd .. && cd kry && scrapy crawl kryspider -a my_argument=${s}`;
+  let obj= {};
+  exec(command1, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${error.message}`);
       return;
@@ -28,12 +29,22 @@ app.post("/devices", (req, res) => {
       console.error(`stderr: ${stderr}`);
       // return;
     }
+     obj = { stdout };
     // console.log(`stdout: ${stdout}`);
-    const obj= {stdout}
-    res.send(obj)
+  res.send(obj);
   });
-  // const obj= {command}
-  // res.send(obj);
+  // exec(command, (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.error(`Error: ${error.message}`);
+  //     return;
+  //   }
+  //   if (stderr) {
+  //     console.error(`stderr: ${stderr}`);
+  //     // return;
+  //   }
+  //   console.log(`stdout: ${stdout}`);
+  // });
+
 });
 
 app.listen(port, () => {

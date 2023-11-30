@@ -7,10 +7,8 @@ const Device = ({ item }) => {
       </figure>
       <h3 className="py-2 text-sm font-semibold">{model}</h3>
       {/* <p className="h-20 text-gray-500 text-xs">{content.description}</p> */}
-      
-      <button
-        className="w-full btn rounded-md bg-[#2F80ED] text-white"
-      >
+
+      <button className="w-full btn rounded-md bg-[#2F80ED] text-white">
         Go to link
       </button>
     </div>

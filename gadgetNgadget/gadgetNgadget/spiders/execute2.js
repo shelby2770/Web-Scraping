@@ -1,14 +1,14 @@
 const { exec } = require('child_process');
 
-const s= "Samsung"
-const command= `cd .. && cd gadgetNgadget && scrapy crawl spider1 -a my_argument=${s}`
+const s= "pixel 7"
+const command= `python spider.py ${s}`
 exec(command, (error, stdout, stderr) => {
   if (error) {
     console.error(`Error: ${error.message}`);
     return;
   }
   if (stderr) {
-    console.error(`stderr: ${stderr}`);
+    // console.error(`stderr: ${stderr}`);
     // return;
   }
   console.log(`stdout: ${stdout}`);
