@@ -3,8 +3,13 @@ const cors = require("cors");
 const app = express();
 const { exec } = require("child_process");
 
-//middlewares
-app.use(cors());
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
@@ -16,7 +21,7 @@ app.get("/", (req, res) => {
 app.post("/devices", (req, res) => {
   console.log("api is hitting");
   const s = req.body.inputValue;
-  const command = `python spider.py ${s}`
+  const command = `python spider.py ${s}`;
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${error.message}`);
@@ -26,8 +31,8 @@ app.post("/devices", (req, res) => {
       // console.error(`stderr: ${stderr}`);
       // return;
     }
-    const get_data= JSON.parse(stdout)
-  res.send(get_data);
+    const get_data = JSON.parse(stdout);
+    res.send(get_data);
   });
 });
 

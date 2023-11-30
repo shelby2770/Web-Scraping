@@ -14,13 +14,18 @@ const NavBar = () => {
     } else {
       setData("Processing");
       const user = { inputValue };
-      fetch("http://localhost:3000/devices", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(user),
-      })
+      fetch(
+        // "http://localhost:3000/devices",
+        "https://device-tracker-backend-gm21mgqy2-adnan-istiaques-projects.vercel.app/devices",
+        // "https://device-tracker-backend-7ilnbt9f2-adnan-istiaques-projects.vercel.app/devices",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           setData(data);
