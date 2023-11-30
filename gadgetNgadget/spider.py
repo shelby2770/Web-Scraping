@@ -42,12 +42,12 @@ class Spider2(scrapy.Spider):
         yield scrapy.Request(url, callback=self.parse1, dont_filter=True)
 
     def parse1(self, response):
-        cards = response.css('.product-type-simple')
-        self.shop_img = response.css('.retina-logo').css('img::attr(src)').get()
-        for i, j in enumerate(cards):
-            url = j.css('a::attr(href)').extract_first()
-            self.last_img = j.css('img::attr(src)').get()
-            yield scrapy.Request(url, callback=self.parse2, dont_filter=True)
+        images = response.css('.img-responsive').css('img::attr(src)').getall()
+        links= response.css('.post-title a').css('a::attr(href)').getall()
+        self.shop_img = images[0]
+        for i, j in enumerate(links):
+            self.last_img = images[i+1]
+            yield scrapy.Request(j, callback=self.parse2, dont_filter=True)
 
     def parse2(self, response):
         global product_list
@@ -108,5 +108,4 @@ process.crawl(Spider2, q)
 process.crawl(Spider3, q)
 process.start()
 sumash_tech(q)
-# print(*product_list, sep='\n')
 print(json.dumps(product_list))
