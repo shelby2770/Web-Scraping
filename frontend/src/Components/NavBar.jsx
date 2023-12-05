@@ -14,7 +14,7 @@ const NavBar = () => {
     } else {
       setData("Processing");
       let temp_data = [];
-      fetch("http://127.0.0.1:5000/spider", {
+      fetch("https://flask-demo-zeta-nine.vercel.app/spider", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -27,7 +27,7 @@ const NavBar = () => {
           temp_data = new_data;
 
           let kry_links = [];
-          fetch("http://127.0.0.1:5000/kry_links", {
+          fetch("https://flask-demo-zeta-nine.vercel.app/kry_links", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -39,7 +39,7 @@ const NavBar = () => {
               kry_links = JSON.parse(data);
               let count = 0;
               kry_links.map((link) => {
-                fetch("http://127.0.0.1:5000/kry_spider", {
+                fetch("https://flask-demo-zeta-nine.vercel.app/kry_spider", {
                   method: "POST",
                   headers: {
                     "content-type": "application/json",
