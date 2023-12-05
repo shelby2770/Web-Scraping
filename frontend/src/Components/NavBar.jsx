@@ -13,22 +13,49 @@ const NavBar = () => {
       swal("Input field empty!", "", "error");
     } else {
       setData("Processing");
-      const user = { inputValue };
-      fetch(
-        // "http://localhost:3000/devices",
-        "https://device-tracker-backend-gm21mgqy2-adnan-istiaques-projects.vercel.app/devices",
-        // "https://device-tracker-backend-7ilnbt9f2-adnan-istiaques-projects.vercel.app/devices",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }
-      )
+      let temp_data = [];
+      fetch("http://127.0.0.1:5000/spider", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(inputValue),
+      })
         .then((res) => res.json())
         .then((data) => {
-          setData(data);
+          const new_data = JSON.parse(data);
+          temp_data = new_data;
+
+          let kry_links = [];
+          fetch("http://127.0.0.1:5000/kry_links", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(inputValue),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              kry_links = JSON.parse(data);
+              let count = 0;
+              kry_links.map((link) => {
+                fetch("http://127.0.0.1:5000/kry_spider", {
+                  method: "POST",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: JSON.stringify(link),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    const single_data = JSON.parse(data);
+                    temp_data.push(single_data[0]);
+                    count++;
+                    if (count == kry_links.length) setData(temp_data);
+                  });
+              });
+              if (!kry_links.length) setData(temp_data);
+            });
         });
       setInputValue("");
     }

@@ -3,7 +3,7 @@ const ShowError = () => {
   return (
     <div className="flex flex-col items-center gap-4">
       <Link to="/">
-        <button className="btn btn-active btn-secondary">
+        <button className="btn btn-active bg-primary_clr text-neutral-100">
           Go Back To Home
         </button>
       </Link>
